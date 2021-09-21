@@ -1,19 +1,29 @@
 import './App.css';
-import {button, useState} from 'react';
+import {useState} from 'react';
 
-function addToDo(todos, setTodos){
-  setTodos([...todos, 'third'])
+function handleChange(event, setNewTask) {
+  setNewTask(event.target.value)
+  console.log(event)
+}
+
+function addToDo(todos, setTodos, newTask){
+  console.log(newTask)
+  if(newTask!=undefined && newTask!=""){
+    setTodos([...todos, newTask])
+  }
 }
 
 function App() {
-
+  const[newTask, setNewTask] = useState();
   const[todos, setTodos] = useState(['first','second']);
   const toDoList = todos.map((element) =>
-  <li>{element}</li>);
+  <div><li>{element}</li><button>X</button></div>
+);
 
   return (
     <div className="App">
-    <button onClick={() => addToDo(todos, setTodos)}>Add</button>
+    <input type="text" value={newTask} placeholder="Add new task" onChange={event => handleChange(event, setNewTask)} />
+    <button onClick={() => addToDo(todos, setTodos, newTask)}>Add</button>
     <ul>
     {toDoList}
     </ul>
