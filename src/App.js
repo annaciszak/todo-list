@@ -6,6 +6,11 @@ function handleChange(event, setNew) {
   console.log(event)
 }
 
+function handleChangeCheckbox(event, setNew) {
+  setNew(event.target.checked)
+  console.log(event)
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -22,11 +27,11 @@ function addToDo(todos, setTodos, newTask) {
 function Task({ id, value, selfRemove }) {
   const [done, setDone] = useState(false);
   return (
-    <li>
-      <input value={done} type="checkbox" onChange={event => handleChange(event, setDone)} />
-      {done ? <s>{value}</s> : value}
-      <button onClick={() => selfRemove(id)}>X</button>
-    </li>
+    <tr>
+      <td><input value={done} type="checkbox" onChange={event => handleChangeCheckbox(event, setDone)} /></td>
+      <td>{done ? <s>{value}</s> : value}</td>
+      <td><button onClick={() => selfRemove(id)}>X</button></td>
+    </tr>
   );
 }
 
@@ -63,7 +68,7 @@ function ToDo({ values, setValues }) {
   }
 
   return (
-    <ul>
+    <table>
       {values.map((element) =>
         <Task id={element.id} value={element.value} selfRemove={removeFromToDoList} />
       )}
@@ -74,7 +79,7 @@ function ToDo({ values, setValues }) {
           <button onClick={()=> removeFromToDoList(element.id)}>X</button>
         </li>
       )} */}
-    </ul>
+    </table>
   );
 }
 
