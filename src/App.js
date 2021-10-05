@@ -1,13 +1,10 @@
 import './App.css';
 import { useState } from 'react';
+import ToDo from './components/ToDo/ToDo';
+
 
 function handleChange(event, setNew) {
   setNew(event.target.value)
-  console.log(event)
-}
-
-function handleChangeCheckbox(event, setNew) {
-  setNew(event.target.checked)
   console.log(event)
 }
 
@@ -22,17 +19,6 @@ function addToDo(todos, setTodos, newTask) {
   if (newTask != undefined && newTask != "") {
     setTodos([...todos, { id: getRandomInt(0, 1000000), value: newTask }])
   }
-}
-
-function Task({ id, value, selfRemove }) {
-  const [done, setDone] = useState(false);
-  return (
-    <tr>
-      <td><input value={done} type="checkbox" onChange={event => handleChangeCheckbox(event, setDone)} /></td>
-      <td>{done ? <s>{value}</s> : value}</td>
-      <td><button onClick={() => selfRemove(id)}>X</button></td>
-    </tr>
-  );
 }
 
 function App() {
@@ -60,27 +46,6 @@ function App() {
       <hr />
       <ToDo values={todo2} setValues={setTodo2}></ToDo>
     </div>);
-}
-
-function ToDo({ values, setValues }) {
-  const removeFromToDoList = (id) => {
-    setValues(values.filter((e) => e.id !== id));
-  }
-
-  return (
-    <table>
-      {values.map((element) =>
-        <Task id={element.id} value={element.value} selfRemove={removeFromToDoList} />
-      )}
-
-      {/* {props.values.map(element => 
-        <li>
-          {element.value}
-          <button onClick={()=> removeFromToDoList(element.id)}>X</button>
-        </li>
-      )} */}
-    </table>
-  );
 }
 
 export default App;
